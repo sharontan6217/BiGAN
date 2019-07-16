@@ -377,11 +377,14 @@ class BiGAN(BaseEstimator,
         
     def visualising(self):
     #generate output data
+        x=[]
+        y=[]
+        d=[]
         from sklearn.metrics import mean_squared_error
-        for i in range(len(self.population)):
-            x=self.x_test[i]
-            #x=self.population[i].actual
-            y=self.population[i].predict
+        for i in range(PopulationSize):
+            x=x_test[i]
+            #x=x_actual[i]
+            y=x_predict[i]
             d=x-y
             df_output=pd.DataFrame({'actual':x,'predict':y,'difference':d})
             file_name='output_gabigan_'+fileName+str(object=currentTime)+'.csv'
@@ -427,12 +430,10 @@ class BiGAN(BaseEstimator,
     def clean(self):
         del self.x[:]
         del self.y[:]
-        del self.actual[:]
-        del self.predict[:]
-        del self.Diff[:]
-        del self.r[:]
-        del self.x_test[:]
+        del x_actual[:]
+        del x_predict[:]
         del self.d[:]
+        del x_test[:]
         #plt.cla()
         #plt.clf()
         #del self.testDate[:]
