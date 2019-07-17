@@ -356,24 +356,9 @@ class BiGAN(BaseEstimator,
         theme_matplotlib()
         plot.save(filename='output_ga_'+str(object=predictDate)+'_'+str(object=currentTime)+'_bigan_ga_distribution.png', path=graph_dir_1)
         
-        print("The VaR at 1%% estimate given by the BiGAN: %.2f%%" % (100 * np.percentile(a=x_mean, axis=0, q=1)))
+        print("The VaR at 1%% estimate given by the BiGAN: %.2f%%" % (100 * np.percentile(a=x_mean, axis=0, q=1
         
-       #generator
-        change=x_predict-x_actual
-        g=[]
-        reward=[]
-        
-        for i in range(PopulationSize):
-            change[i]=x_predict[i]-x_actual[i]
-            if change[i]<0:
-                g.append((-1)*log10((-1)*change[i]))
-            if change[i]==0:
-                g.append(0)
-            if change[i]>0:
-                g.append(log10(change[i]))
-            reward.append(0)
-        
-        return (x_actual,x_predict,g,reward, x_sample, y_sample, startDate, predictDate)
+        return (x_actual,x_predict,x_sample, y_sample, startDate, predictDate)
         
     def visualising(self):
     #generate output data
@@ -382,7 +367,7 @@ class BiGAN(BaseEstimator,
         d=[]
         from sklearn.metrics import mean_squared_error
         for i in range(PopulationSize):
-            x=x_test[i]
+            x=x_sample[i]
             #x=x_actual[i]
             y=x_predict[i]
             d=x-y
@@ -433,7 +418,7 @@ class BiGAN(BaseEstimator,
         del x_actual[:]
         del x_predict[:]
         del self.d[:]
-        del x_test[:]
+        del x_sample[:]
         #plt.cla()
         #plt.clf()
         #del self.testDate[:]
